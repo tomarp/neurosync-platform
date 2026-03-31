@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optical Illusion Task</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="task2">
+    <main class="page-shell">
+        <div id="page-container"></div>
+    </main>
+
+    <audio id="background-audio" loop preload="auto">
+        <source src="auditoryBeats/40HzBinauralBeats.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script src="experiment-config.js"></script>
+    <script src="platform-utils.js"></script>
+    <script>
+        PlatformUtils.setPageData("task2");
+        const container = document.getElementById("page-container");
+        const pages = [
+            {
+                mode: "manual",
+                eyebrow: "Stage 6",
+                title: ExperimentConfig.task2.introTitle,
+                subtitle: ExperimentConfig.task2.introBody,
+                buttonLabel: "Begin Task 2",
+            },
+        ].concat(
+            ExperimentConfig.task2.imageItems.map(function (item, index) {
+                return {
+                    mode: "timed",
+                    timer: true,
+                    seconds: ExperimentConfig.timings.taskItemSeconds,
+                    eyebrow: `Task 2 Item ${index + 1} of ${ExperimentConfig.task2.imageItems.length}`,
+                    title: `Optical Illusion ${index + 1}`,
+                    subtitle: item.prompt,
+                    mediaHtml: PlatformUtils.buildTaskMediaImage(item.src, item.prompt),
+                    bodyHtml: PlatformUtils.optionListMarkup(`image_q_${index + 1}`, ExperimentConfig.task2.options),
+                };
+            })
+        );
+
+        PlatformUtils.renderSequence(
+            container,
+            pages,
+            function () {
+                window.location.href = ExperimentConfig.routes.surveyPostTask2;
+            },
+            { backgroundAudioId: "background-audio" }
+        );
+    </script>
+</body>
+</html>

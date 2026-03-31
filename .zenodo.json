@@ -1,0 +1,19 @@
+{
+  "title": "NEUROSYNC Platform",
+  "upload_type": "software",
+  "license": "MIT",
+  "description": "Static participant-facing experiment runner for the NEUROSYNC multimodal auditory stimulation study under chromatic ambient lighting.",
+  "creators": [
+    {
+      "name": "Tomar, Puneet"
+    }
+  ],
+  "keywords": [
+    "auditory stimulation",
+    "chromatic ambient lighting",
+    "static web app",
+    "experiment runner",
+    "multimodal protocol"
+  ],
+  "notes": "Build repository_root before publication. Review repository URL, DOI, and author metadata before releasing a public software record."
+}

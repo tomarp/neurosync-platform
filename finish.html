@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Completed</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="finish">
+    <main class="page-shell">
+        <section class="stage-card stage-card--manual">
+            <p class="eyebrow">Session Complete</p>
+            <h1>Thank You for Participating</h1>
+            <p class="stage-subtitle">
+                Please remain seated while the operator provides the final instructions and checks the recording status.
+            </p>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h2>What is saved</h2>
+                    <p>Survey responses, physiology, and video are handled outside this static app.</p>
+                </div>
+                <div class="summary-card">
+                    <h2>Operator note</h2>
+                    <p>Confirm recording shutdown and participant debrief before closing the session.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="experiment-config.js"></script>
+    <script src="platform-utils.js"></script>
+    <script>
+        PlatformUtils.setPageData("finish");
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseline Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="survey_baseline">
+    <main class="page-shell">
+        <div id="page-container"></div>
+    </main>
+
+    <script src="experiment-config.js"></script>
+    <script src="platform-utils.js"></script>
+    <script>
+        PlatformUtils.setPageData("survey_baseline");
+        const container = document.getElementById("page-container");
+        const pages = [
+            {
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.surveyBaselineIntroSeconds,
+                eyebrow: "Stage 1",
+                title: "Baseline Survey",
+                subtitle: "Please complete the baseline questionnaire on the next page during the acclimation period.",
+            },
+            {
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.surveyBaselineFormSeconds,
+                eyebrow: "Stage 1",
+                title: "Baseline Survey Form",
+                bodyHtml: PlatformUtils.buildFormPage(
+                    "Baseline survey form",
+                    "The timer continues while the embedded form is open.",
+                    ExperimentConfig.forms.surveyBaseline
+                ),
+            },
+        ];
+
+        PlatformUtils.renderSequence(container, pages, function () {
+            window.location.href = ExperimentConfig.routes.acclimation;
+        });
+    </script>
+</body>
+</html>

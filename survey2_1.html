@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Task Survey 1</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="survey_post_task1">
+    <main class="page-shell">
+        <div id="page-container"></div>
+    </main>
+
+    <script src="experiment-config.js"></script>
+    <script src="platform-utils.js"></script>
+    <script>
+        PlatformUtils.setPageData("survey_post_task1");
+        const container = document.getElementById("page-container");
+        const pages = [
+            {
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.surveyPostTaskIntroSeconds,
+                eyebrow: "Stage 5",
+                title: "Post-Task Survey 1",
+                subtitle: "Please answer the survey on the next page based on your experience during the first task block.",
+            },
+            {
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.surveyPostTaskFormSeconds,
+                eyebrow: "Stage 5",
+                title: "Survey Form",
+                bodyHtml: PlatformUtils.buildFormPage(
+                    "Post-task survey 1",
+                    "The timer continues while the embedded form is open.",
+                    ExperimentConfig.forms.surveyPostTask
+                ),
+            },
+        ];
+
+        PlatformUtils.renderSequence(container, pages, function () {
+            window.location.href = ExperimentConfig.routes.task2;
+        });
+    </script>
+</body>
+</html>

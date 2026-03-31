@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: NEUROSYNC Platform
+message: "If you use this software package, please cite the software record and the related study protocol."
+type: software
+authors:
+  - family-names: Tomar
+    given-names: Puneet
+repository-code: "https://github.com/REPLACE_WITH_PLATFORM_REPOSITORY"
+license: MIT
+version: 1.0.0
+date-released: 2026-03-31
+abstract: >
+  Static participant-facing experiment runner for the NEUROSYNC multimodal auditory
+  stimulation study under chromatic ambient lighting, including baseline survey,
+  acclimation, baseline recording, verbal-semantic audio trials,
+  visuospatial image trials, and two post-task surveys.
+keywords:
+  - auditory stimulation
+  - chromatic ambient lighting
+  - static web app
+  - experiment runner
+  - multimodal protocol

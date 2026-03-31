@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### AL ###
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
@@ -20,3 +21,9 @@ rad.json
 *.flf
 #Test results file
 TestResults.xml
+=======
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+>>>>>>> 0aceb48 (initial commit)

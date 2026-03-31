@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEUROSYNC Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="start">
+    <div class="brand-strip">
+        <img src="visuals/logo/music-logo-v-3-4.png" alt="Project logo" class="brand-strip__logo brand-strip__logo--center">
+        <img src="visuals/logo/unipg_marchio_negativo.png" alt="University of Perugia" class="brand-strip__logo brand-strip__logo--left">
+        <img src="visuals/logo/EU-logo.png" alt="European Union" class="brand-strip__logo brand-strip__logo--right">
+    </div>
+
+    <main class="page-shell">
+        <section class="stage-card stage-card--manual">
+            <p class="eyebrow">NEUROSYNC Static Experiment Runner</p>
+            <h1>NEUROSYNC</h1>
+            <p class="stage-subtitle">
+                Multimodal auditory stimulation under chromatic ambient lighting with baseline survey, acclimation,
+                eyes-open baseline recording, verbal-semantic audio trials, visuospatial image trials,
+                and two post-task surveys.
+            </p>
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h2>Flow</h2>
+                    <p>Baseline survey → acclimation → baseline → task 1 → survey → task 2 → survey</p>
+                </div>
+                <div class="summary-card">
+                    <h2>Audio Blocks</h2>
+                    <p>10 Hz during task 1, 40 Hz during task 2</p>
+                </div>
+                <div class="summary-card">
+                    <h2>Publication Note</h2>
+                    <p>This app is packaged as a publication-ready static experiment runner.</p>
+                </div>
+            </div>
+            <button class="primary-button" id="start-button">Start Session</button>
+        </section>
+    </main>
+
+    <script src="experiment-config.js"></script>
+    <script src="platform-utils.js"></script>
+    <script>
+        PlatformUtils.setPageData("start");
+        document.getElementById("start-button").addEventListener("click", function () {
+            window.location.href = ExperimentConfig.routes.surveyBaseline;
+        });
+    </script>
+</body>
+</html>
