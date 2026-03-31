@@ -5,7 +5,7 @@ type: software
 authors:
   - family-names: Tomar
     given-names: Puneet
-repository-code: "https://github.com/REPLACE_WITH_PLATFORM_REPOSITORY"
+repository-code: "https://github.com/neurosync-platform"
 license: MIT
 version: 1.0.0
 date-released: 2026-03-31
