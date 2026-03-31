@@ -1119,7 +1119,7 @@ h2 {
 }
 
 .cover-vault__logo {
-    width: 220px;
+    width: 300px;
     height: auto;
 }
 
@@ -1617,11 +1617,11 @@ h2 {
 
 @media (max-width: 900px) {
     .about-footer {
-        padding: 12px 18px;
+        padding: 22px 18px;
     }
 
     .about-footer__logos {
-        grid-template-columns: fr;
+        grid-template-columns: 1fr;
     }
 }
 
