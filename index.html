@@ -1,51 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEUROSYNC Platform</title>
+    <title>NEUROSYNC About</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="start">
-    <div class="brand-strip">
-        <img src="visuals/logo/music-logo-v-3-4.png" alt="Project logo" class="brand-strip__logo brand-strip__logo--center">
-        <img src="visuals/logo/unipg_marchio_negativo.png" alt="University of Perugia" class="brand-strip__logo brand-strip__logo--left">
-        <img src="visuals/logo/EU-logo.png" alt="European Union" class="brand-strip__logo brand-strip__logo--right">
-    </div>
+    <main class="dashboard-shell about-shell">
+        <header class="app-topbar app-topbar--review">
+            <a class="app-brand" href="index.html">
+                <img src="visuals/logo/neurosync-logo.svg" alt="NEUROSYNC" class="app-brand__logo app-brand__logo--full">
+            </a>
+            <div class="app-topbar__actions">
+                <a class="topbar-link" href="home.html">Welcome</a>
+                <a class="topbar-link topbar-link--current" href="index.html">About</a>
+            </div>
+        </header>
 
-    <main class="page-shell">
-        <section class="stage-card stage-card--manual">
-            <p class="eyebrow">NEUROSYNC Static Experiment Runner</p>
-            <h1>NEUROSYNC</h1>
-            <p class="stage-subtitle">
-                Multimodal auditory stimulation under chromatic ambient lighting with baseline survey, acclimation,
-                eyes-open baseline recording, verbal-semantic audio trials, visuospatial image trials,
-                and two post-task surveys.
-            </p>
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <h2>Flow</h2>
-                    <p>Baseline survey → acclimation → baseline → task 1 → survey → task 2 → survey</p>
+        <section class="cover-main cover-main--app about-hero">
+            <div class="cover-copy">
+                <p class="eyebrow">About NEUROSYNC</p>
+                <h1>Multimodal response platform for auditory & visuospatial tasks</h1>
+                <p class="stage-subtitle">
+                    NEUROSYNC platform is an experiment platform for synchronized multimodal sessions combining EEG, autonomic sensing, participant video, and auditory & visuospatial tasks blocks under chromatic ambient conditions.
+                </p>
+                <div class="cover-mini-meta">
+                    <span>EEG</span>
+                    <span>EDA / BVP</span>
+                    <span>Participant video</span>
+                    <span>10 Hz + 40 Hz tasks</span>
                 </div>
-                <div class="summary-card">
-                    <h2>Audio Blocks</h2>
-                    <p>10 Hz during task 1, 40 Hz during task 2</p>
-                </div>
-                <div class="summary-card">
-                    <h2>Publication Note</h2>
-                    <p>This app is packaged as a publication-ready static experiment runner.</p>
+                <div class="cover-actions">
+                    <button class="primary-button" data-mode="review">View platform</button>
+                    <button class="secondary-button" data-mode="live">Live session</button>
                 </div>
             </div>
-            <button class="primary-button" id="start-button">Start Session</button>
+
+            <div class="cover-vault" aria-hidden="true">
+                <div class="cover-vault__halo"></div>
+                <div class="cover-vault__ring cover-vault__ring--outer"></div>
+                <div class="cover-vault__ring cover-vault__ring--mid"></div>
+                <div class="cover-vault__ring cover-vault__ring--inner"></div>
+                <div class="cover-vault__core">
+                    <img src="visuals/logo/neurosync-logo1.svg" alt="" class="cover-vault__logo">
+                </div>
+            </div>
         </section>
+
+        <section class="cover-blocks cover-blocks--about">
+            <article class="cover-block">
+                <p class="cover-block__eyebrow">Study flow</p>
+                <h2>Survey, acclimation, baseline, task, survey, task, survey</h2>
+                <p>The platform keeps the session sequence legible while external systems record physiology and participant video.</p>
+            </article>
+            <article class="cover-block">
+                <p class="cover-block__eyebrow">Review mode</p>
+                <h2>Inspect the platform structure page by page</h2>
+                <p>Review mode keeps stage navigation available so the full flow can be inspected page by page.</p>
+            </article>
+            <article class="cover-block">
+                <p class="cover-block__eyebrow">Live session</p>
+                <h2>Participant presentation without interface clutter</h2>
+                <p>Live mode hides review navigation and presents the experiment as a cleaner participant-facing window.</p>
+            </article>
+        </section>
+
+        <footer class="about-footer">
+            <div class="about-footer__copy">
+                <p class="cover-block__eyebrow">Affiliations and funding</p>
+                <h2>Research and project context</h2>
+                <p>This project has received funding from the European Union's Horizon Europe research and innovation programme under the Marie Skłodowska-Curie Doctoral Networks Grant Agreement No. 101073357.</p>
+            </div>
+            <div class="about-footer__logos">
+                <div class="about-footer__logo about-footer__logo--light">
+                    <img src="visuals/logo/metatags-logo-unipg.png" alt="University affiliation logo">
+                </div>
+                <div class="about-footer__logo about-footer__logo--light">
+                    <img src="visuals/logo/music-logo-v-3-4.png" alt="MUSIC project logo">
+                </div>
+                <div class="about-footer__logo about-footer__logo--light">
+                    <img src="visuals/logo/Horizon_2020.png" alt="European Union funding logo">
+                </div>
+            </div>
+        </footer>
     </main>
 
     <script src="experiment-config.js"></script>
     <script src="platform-utils.js"></script>
     <script>
         PlatformUtils.setPageData("start");
-        document.getElementById("start-button").addEventListener("click", function () {
-            window.location.href = ExperimentConfig.routes.surveyBaseline;
+        document.querySelectorAll("[data-mode]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                PlatformUtils.saveSessionContext({ mode: button.dataset.mode });
+                PlatformUtils.goToRoute("home");
+            });
         });
     </script>
 </body>

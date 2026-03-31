@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEUROSYNC Welcome</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+    <main class="dashboard-shell">
+        <header class="app-topbar app-topbar--review">
+            <a class="app-brand" href="index.html">
+                <img src="visuals/logo/neurosync-logo.svg" alt="NEUROSYNC" class="app-brand__logo app-brand__logo--full">
+            </a>
+            <div class="app-topbar__actions">
+                <a class="topbar-link topbar-link--current" href="home.html">Welcome</a>
+                <a class="topbar-link" href="index.html">About</a>
+            </div>
+        </header>
+
+        <section class="dashboard-hero">
+            <section class="dashboard-panel dashboard-panel--hero">
+                <p class="dashboard-panel__label">Welcome</p>
+                <h1>Session workspace</h1>
+                <p class="stage-subtitle">Configure session context, verify readiness, and launch the NEUROSYNC flow.</p>
+            </section>
+            <div class="dashboard-mode-card dashboard-mode-card--compact">
+                <p class="dashboard-mode-card__label">View mode</p>
+                <strong id="mode-label">Review mode</strong>
+                <div class="dashboard-mode-actions">
+                    <button class="secondary-button" type="button" data-set-mode="review">Review</button>
+                    <button class="secondary-button" type="button" data-set-mode="live">Live</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="dashboard-grid">
+            <section class="dashboard-panel">
+                <p class="dashboard-panel__label">Session context</p>
+                <h2>Operator configuration</h2>
+                <form id="session-form" class="session-form">
+                    <label>
+                        Participant ID
+                        <input type="text" name="participantId" id="participant-id" placeholder="P01">
+                    </label>
+                    <label>
+                        Lighting condition
+                        <select name="lightCondition" id="light-condition">
+                            <option value="">Select</option>
+                            <option value="red">Red</option>
+                            <option value="blue">Blue</option>
+                        </select>
+                    </label>
+                    <label>
+                        Time cluster
+                        <select name="timeCluster" id="time-cluster">
+                            <option value="">Select</option>
+                            <option value="t1">T1</option>
+                            <option value="t2">T2</option>
+                            <option value="t3">T3</option>
+                            <option value="t4">T4</option>
+                        </select>
+                    </label>
+                    <div class="session-form__actions">
+                        <button class="primary-button" type="submit">Start Live Session</button>
+                        <button class="secondary-button" type="button" id="start-review-session">Open View Mode</button>
+                        <a class="topbar-link" href="index.html">About</a>
+                    </div>
+                </form>
+            </section>
+
+            <section class="dashboard-panel">
+                <p class="dashboard-panel__label">Readiness</p>
+                <h2>Pre-session checklist</h2>
+                <div class="readiness-grid">
+                    <label class="check-tile"><input type="checkbox"> EEG acquisition started</label>
+                    <label class="check-tile"><input type="checkbox"> Wearable recording started</label>
+                    <label class="check-tile"><input type="checkbox"> Participant video started</label>
+                    <label class="check-tile"><input type="checkbox"> Headphones verified</label>
+                    <label class="check-tile"><input type="checkbox"> Chromatic lighting confirmed</label>
+                    <label class="check-tile"><input type="checkbox"> Survey links reachable</label>
+                </div>
+            </section>
+        </section>
+
+        <section class="dashboard-grid dashboard-grid--secondary">
+            <section class="dashboard-panel dashboard-panel--wide">
+                <p class="dashboard-panel__label">Flow</p>
+                <h2>NEUROSYNC session architecture</h2>
+                <div class="flow-overview">
+                    <div class="flow-overview__step"><span>Phase 1</span><strong>Baseline survey</strong><p>Collect baseline state before acclimation.</p></div>
+                    <div class="flow-overview__step"><span>Phase 2</span><strong>Acclimation</strong><p>Quiet settling under chromatic ambient lighting.</p></div>
+                    <div class="flow-overview__step"><span>Phase 3</span><strong>Baseline recording</strong><p>Eyes-open resting-state acquisition.</p></div>
+                    <div class="flow-overview__step"><span>Phase 4</span><strong>Task block 1</strong><p>10 Hz verbal-semantic stimulation.</p></div>
+                    <div class="flow-overview__step"><span>Phase 5</span><strong>Survey 1</strong><p>Immediate post-task subjective response.</p></div>
+                    <div class="flow-overview__step"><span>Phase 6</span><strong>Task block 2</strong><p>40 Hz visuospatial illusion block.</p></div>
+                    <div class="flow-overview__step"><span>Phase 7</span><strong>Survey 2</strong><p>Final subjective response capture.</p></div>
+                    <div class="flow-overview__step"><span>Phase 8</span><strong>Completion</strong><p>Operator shutdown and debrief.</p></div>
+                </div>
+            </section>
+            <section class="dashboard-panel" id="review-shortcuts-panel">
+                <p class="dashboard-panel__label">Review shortcuts</p>
+                <h2>Jump to any stage</h2>
+                <div class="shortcut-grid">
+                    <button class="shortcut-button" data-route="surveyBaseline">Baseline survey</button>
+                    <button class="shortcut-button" data-route="acclimation">Acclimation</button>
+                    <button class="shortcut-button" data-route="baseline">Baseline recording</button>
+                    <button class="shortcut-button" data-route="task1">Task block 1</button>
+                    <button class="shortcut-button" data-route="surveyPostTask1">Survey 1</button>
+                    <button class="shortcut-button" data-route="task2">Task block 2</button>
+                    <button class="shortcut-button" data-route="surveyPostTask2">Survey 2</button>
+                    <button class="shortcut-button" data-route="finish">Completion</button>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script src="experiment-config.js"></script>
+    <script src="platform-utils.js"></script>
+    <script>
+        PlatformUtils.setPageData("home");
+        const participantInput = document.getElementById("participant-id");
+        const lightSelect = document.getElementById("light-condition");
+        const timeSelect = document.getElementById("time-cluster");
+        const modeLabel = document.getElementById("mode-label");
+        const shortcutPanel = document.getElementById("review-shortcuts-panel");
+
+        function syncFromContext() {
+            const context = PlatformUtils.readSessionContext();
+            participantInput.value = context.participantId || "";
+            lightSelect.value = context.lightCondition || "";
+            timeSelect.value = context.timeCluster || "";
+            modeLabel.textContent = context.mode === "live" ? "Live session mode" : "Review mode";
+            shortcutPanel.style.display = context.mode === "live" ? "none" : "block";
+        }
+
+        syncFromContext();
+
+        document.querySelectorAll("[data-set-mode]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                PlatformUtils.saveSessionContext({ mode: button.dataset.setMode });
+                syncFromContext();
+            });
+        });
+
+
+        function persistContext() {
+            PlatformUtils.saveSessionContext({
+                participantId: participantInput.value.trim(),
+                lightCondition: lightSelect.value,
+                timeCluster: timeSelect.value,
+            });
+        }
+
+        document.getElementById("session-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            persistContext();
+            PlatformUtils.goToRoute("surveyBaseline");
+        });
+
+        document.getElementById("start-review-session").addEventListener("click", function () {
+            persistContext();
+            PlatformUtils.saveSessionContext({ mode: "review" });
+            PlatformUtils.goToRoute("surveyBaseline");
+        });
+
+        document.querySelectorAll("[data-route]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                persistContext();
+                PlatformUtils.goToRoute(button.dataset.route);
+            });
+        });
+    </script>
+</body>
+</html>

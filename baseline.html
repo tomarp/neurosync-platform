@@ -7,41 +7,40 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="baseline">
-    <main class="page-shell">
-        <section class="stage-card stage-card--timed">
-            <p class="eyebrow">Stage 3</p>
-            <h1>Eyes-Open Baseline</h1>
-            <p class="stage-subtitle">
-                Stay in a resting position while keeping your eyes open and body movement to a minimum.
-            </p>
-            <div id="timer-shell"></div>
-        </section>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <script src="experiment-config.js"></script>
     <script src="platform-utils.js"></script>
     <script>
         PlatformUtils.setPageData("baseline");
-        document.getElementById("timer-shell").innerHTML = PlatformUtils.timerMarkup();
-        (function () {
-            const timerText = document.querySelector("[data-timer-text]");
-            const timerCircle = document.querySelector(".timer-circle");
-            const seconds = ExperimentConfig.timings.baselineSeconds;
-            const circumference = 2 * Math.PI * 66;
-            timerCircle.style.strokeDasharray = `${circumference}`;
-            timerCircle.style.strokeDashoffset = "0";
-            let remaining = seconds;
-            timerText.textContent = `${remaining}s`;
-            const interval = window.setInterval(function () {
-                remaining -= 1;
-                timerText.textContent = `${Math.max(remaining, 0)}s`;
-                timerCircle.style.strokeDashoffset = `${circumference * (1 - Math.max(remaining, 0) / seconds)}`;
-                if (remaining <= 0) {
-                    window.clearInterval(interval);
-                    window.location.href = ExperimentConfig.routes.task1;
-                }
-            }, 1000);
-        })();
+        PlatformUtils.renderStagePage(
+            document.getElementById("page-container"),
+            {
+                activeStage: "baseline",
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.baselineSeconds,
+                progressLabel: "Stage 3 of 8",
+                eyebrow: "Baseline recording",
+                title: "Eyes-open resting baseline",
+                subtitle: "Keep your eyes open, remain still, and maintain attention on the fixation mark until the timer ends.",
+                bodyHtml: `
+                    <div class="focus-field focus-field--baseline">
+                        <div class="fixation-mark" aria-hidden="true"></div>
+                    </div>
+                    ${PlatformUtils.infoCardsMarkup([
+                        { label: "Posture", value: "Remain seated and stable." },
+                        { label: "Attention", value: "Maintain a calm forward gaze." },
+                        { label: "Data quality", value: "Minimize movement, speaking, and unnecessary blinking." }
+                    ])}
+                `,
+                supportText: "This stage supports resting-state physiological acquisition before the task sequence begins.",
+                skipLabel: "Skip baseline"
+            },
+            function () {
+                PlatformUtils.goToRoute("task1");
+            }
+        );
     </script>
 </body>
 </html>

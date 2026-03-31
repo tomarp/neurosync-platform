@@ -1,14 +1,15 @@
 window.ExperimentConfig = {
   app: {
     name: "NEUROSYNC Platform",
-    version: "1.0.0",
+    version: "1.1.0",
     studyTitle:
       "NEUROSYNC: Multimodal Auditory Stimulation Under Chromatic Ambient Lighting",
     repositoryVisibilityNote:
-      "This static app is suitable for repository-based publication and archiving under the NEUROSYNC project.",
+      "Participant-facing platform for the NEUROSYNC study under chromatic ambient lighting.",
   },
   routes: {
     start: "index.html",
+    home: "home.html",
     surveyBaseline: "survey1.html",
     acclimation: "acclimation.html",
     baseline: "baseline.html",
@@ -19,13 +20,9 @@ window.ExperimentConfig = {
     finish: "finish.html",
   },
   timings: {
-    surveyBaselineIntroSeconds: 10,
-    surveyBaselineFormSeconds: 120,
     acclimationSeconds: 150,
     baselineSeconds: 300,
     taskItemSeconds: 60,
-    surveyPostTaskIntroSeconds: 10,
-    surveyPostTaskFormSeconds: 240,
   },
   forms: {
     surveyBaseline:
@@ -35,9 +32,9 @@ window.ExperimentConfig = {
   },
   task1: {
     title: "Verbal-Semantic Task",
-    introTitle: "Welcome to the Verbal-Semantic Task",
+    introTitle: "Verbal-Semantic Task",
     introBody:
-      "You will hear short audio statements. Decide whether each statement contains a semantic inconsistency, no inconsistency, or an inconsistency that is corrected.",
+      "Participants hear short spoken statements and classify semantic consistency before the next item begins.",
     backgroundAudio: "auditoryBeats/10HzBinauralBeats.mp3",
     audioFiles: Array.from({ length: 10 }, (_, index) => `auditoryText/audio_${index + 1}.mp3`),
     options: [
@@ -47,10 +44,10 @@ window.ExperimentConfig = {
     ],
   },
   task2: {
-    title: "Optical Illusion Task",
-    introTitle: "Welcome to the Optical Illusion Task",
+    title: "Visuospatial Illusion Task",
+    introTitle: "Visuospatial Illusion Task",
     introBody:
-      "You will see a sequence of illusion images. Try to identify hidden patterns, objects, or faces before the timer expires.",
+      "Participants inspect a sequence of visual illusions and report whether they could detect the hidden target or pattern.",
     backgroundAudio: "auditoryBeats/40HzBinauralBeats.mp3",
     imageItems: [
       {

@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="survey_baseline">
-    <main class="page-shell">
-        <div id="page-container"></div>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <script src="experiment-config.js"></script>
     <script src="platform-utils.js"></script>
@@ -18,29 +16,39 @@
         const container = document.getElementById("page-container");
         const pages = [
             {
-                mode: "timed",
-                timer: true,
-                seconds: ExperimentConfig.timings.surveyBaselineIntroSeconds,
-                eyebrow: "Stage 1",
-                title: "Baseline Survey",
-                subtitle: "Please complete the baseline questionnaire on the next page during the acclimation period.",
+                activeStage: "surveyBaseline",
+                mode: "manual",
+                progressLabel: "Stage 1 of 8",
+                eyebrow: "Baseline survey",
+                title: "Collect the baseline questionnaire",
+                subtitle: "Use this survey to capture the participant's baseline state before acclimation and physiological recording stages.",
+                bodyHtml: PlatformUtils.infoCardsMarkup([
+                    { label: "Purpose", value: "Record baseline subjective state before the experimental sequence begins." },
+                    { label: "Expected duration", value: "Complete before moving to acclimation." },
+                    { label: "Operator action", value: "Confirm the participant can access the embedded form or fallback link." }
+                ]),
+                supportText: "The platform does not store survey responses locally. Continue after the questionnaire has been completed.",
+                buttonLabel: "Open baseline survey"
             },
             {
-                mode: "timed",
-                timer: true,
-                seconds: ExperimentConfig.timings.surveyBaselineFormSeconds,
-                eyebrow: "Stage 1",
-                title: "Baseline Survey Form",
+                activeStage: "surveyBaseline",
+                mode: "manual",
+                progressLabel: "Stage 1 of 8",
+                eyebrow: "Baseline survey form",
+                title: "Baseline questionnaire",
+                subtitle: "Allow the participant to complete the embedded form, then continue to acclimation.",
                 bodyHtml: PlatformUtils.buildFormPage(
                     "Baseline survey form",
-                    "The timer continues while the embedded form is open.",
+                    "Use the backup link if the embedded form does not load.",
                     ExperimentConfig.forms.surveyBaseline
                 ),
-            },
+                supportText: "Select Continue only after the participant confirms completion.",
+                buttonLabel: "Continue to acclimation"
+            }
         ];
 
         PlatformUtils.renderSequence(container, pages, function () {
-            window.location.href = ExperimentConfig.routes.acclimation;
+            PlatformUtils.goToRoute("acclimation");
         });
     </script>
 </body>

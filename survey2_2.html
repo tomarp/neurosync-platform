@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="survey_post_task2">
-    <main class="page-shell">
-        <div id="page-container"></div>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <script src="experiment-config.js"></script>
     <script src="platform-utils.js"></script>
@@ -18,29 +16,38 @@
         const container = document.getElementById("page-container");
         const pages = [
             {
-                mode: "timed",
-                timer: true,
-                seconds: ExperimentConfig.timings.surveyPostTaskIntroSeconds,
-                eyebrow: "Stage 7",
-                title: "Post-Task Survey 2",
-                subtitle: "Please answer the survey on the next page based on your experience during the second task block.",
+                activeStage: "surveyPostTask2",
+                mode: "manual",
+                progressLabel: "Stage 7 of 8",
+                eyebrow: "Post-task survey 2",
+                title: "Capture responses after Task Block 2",
+                subtitle: "This survey should reflect the participant experience during the 40 Hz visuospatial task block.",
+                bodyHtml: PlatformUtils.infoCardsMarkup([
+                    { label: "Reference block", value: "Task block 2 under 40 Hz auditory stimulation." },
+                    { label: "Goal", value: "Record final subjective response before closing the session." },
+                    { label: "Operator note", value: "After the survey, move directly to session completion and shutdown checks." }
+                ]),
+                buttonLabel: "Open survey 2"
             },
             {
-                mode: "timed",
-                timer: true,
-                seconds: ExperimentConfig.timings.surveyPostTaskFormSeconds,
-                eyebrow: "Stage 7",
-                title: "Survey Form",
+                activeStage: "surveyPostTask2",
+                mode: "manual",
+                progressLabel: "Stage 7 of 8",
+                eyebrow: "Survey 2 form",
+                title: "Final questionnaire",
+                subtitle: "Allow completion of the final questionnaire, then close the session.",
                 bodyHtml: PlatformUtils.buildFormPage(
                     "Post-task survey 2",
-                    "The timer continues while the embedded form is open.",
+                    "Use the backup link if the embedded form does not load.",
                     ExperimentConfig.forms.surveyPostTask
                 ),
-            },
+                supportText: "Continue only after the participant confirms the final questionnaire is complete.",
+                buttonLabel: "Continue to completion"
+            }
         ];
 
         PlatformUtils.renderSequence(container, pages, function () {
-            window.location.href = ExperimentConfig.routes.finish;
+            PlatformUtils.goToRoute("finish");
         });
     </script>
 </body>

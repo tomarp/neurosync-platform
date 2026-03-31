@@ -7,45 +7,42 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="acclimation">
-    <main class="page-shell">
-        <section class="stage-card stage-card--timed">
-            <p class="eyebrow">Stage 2</p>
-            <h1>Acclimation</h1>
-            <p class="stage-subtitle">
-                Please wait quietly for the acclimation period. Review the instructions on screen and prepare for the baseline recording.
-            </p>
-            <div class="instruction-stack" id="typing-effect"></div>
-            <div id="timer-shell"></div>
-        </section>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <script src="experiment-config.js"></script>
     <script src="platform-utils.js"></script>
-    <script src="dynamicText.js"></script>
     <script>
         PlatformUtils.setPageData("acclimation");
-        (function () {
-            document.getElementById("timer-shell").innerHTML = PlatformUtils.timerMarkup();
-            const complete = function () {
-                window.location.href = ExperimentConfig.routes.baseline;
-            };
-            const timerText = document.querySelector("[data-timer-text]");
-            const timerCircle = document.querySelector(".timer-circle");
-            const circumference = 2 * Math.PI * 66;
-            timerCircle.style.strokeDasharray = `${circumference}`;
-            timerCircle.style.strokeDashoffset = "0";
-            let remaining = ExperimentConfig.timings.acclimationSeconds;
-            timerText.textContent = `${remaining}s`;
-            const interval = window.setInterval(function () {
-                remaining -= 1;
-                timerText.textContent = `${Math.max(remaining, 0)}s`;
-                timerCircle.style.strokeDashoffset = `${circumference * (1 - Math.max(remaining, 0) / ExperimentConfig.timings.acclimationSeconds)}`;
-                if (remaining <= 0) {
-                    window.clearInterval(interval);
-                    complete();
-                }
-            }, 1000);
-        })();
+        PlatformUtils.renderStagePage(
+            document.getElementById("page-container"),
+            {
+                activeStage: "acclimation",
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.acclimationSeconds,
+                progressLabel: "Stage 2 of 8",
+                eyebrow: "Acclimation",
+                title: "Quiet acclimation under chromatic ambient lighting",
+                subtitle: "Settle into a comfortable posture, look forward, and allow the session environment to stabilize before baseline recording begins.",
+                bodyHtml: `
+                    <div class="focus-field focus-field--ambient">
+                        <div class="focus-ring"></div>
+                        <div class="focus-ring focus-ring--secondary"></div>
+                        <div class="focus-core"></div>
+                    </div>
+                    ${PlatformUtils.instructionListMarkup([
+                        "Remain seated and minimize movement.",
+                        "Keep headphones on and maintain a forward gaze.",
+                        "Wait quietly until the platform advances to baseline recording."
+                    ])}
+                `,
+                supportText: "This stage is intentionally quiet and minimal to support physiological settling.",
+                skipLabel: "Skip acclimation"
+            },
+            function () {
+                PlatformUtils.goToRoute("baseline");
+            }
+        );
     </script>
 </body>
 </html>

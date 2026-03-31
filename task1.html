@@ -7,9 +7,7 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="task1">
-    <main class="page-shell">
-        <div id="page-container"></div>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <audio id="background-audio" loop preload="auto">
         <source src="auditoryBeats/10HzBinauralBeats.mp3" type="audio/mpeg">
@@ -21,35 +19,47 @@
     <script>
         PlatformUtils.setPageData("task1");
         const container = document.getElementById("page-container");
-        const pages = [
-            {
-                mode: "manual",
-                eyebrow: "Stage 4",
-                title: ExperimentConfig.task1.introTitle,
-                subtitle: ExperimentConfig.task1.introBody,
-                buttonLabel: "Begin Task 1",
-            },
-        ].concat(
-            ExperimentConfig.task1.audioFiles.map(function (audioSrc, index) {
-                return {
-                    mode: "timed",
-                    timer: true,
-                    seconds: ExperimentConfig.timings.taskItemSeconds,
-                    eyebrow: `Task 1 Item ${index + 1} of ${ExperimentConfig.task1.audioFiles.length}`,
-                    title: `Audio Statement ${index + 1}`,
-                    subtitle:
-                        "Listen to the statement, replay it if needed, and select the response that best matches what you heard.",
-                    mediaHtml: PlatformUtils.buildTaskMediaAudio(audioSrc, "10 Hz background stimulation continues during this task block."),
-                    bodyHtml: PlatformUtils.optionListMarkup(`audio_q_${index + 1}`, ExperimentConfig.task1.options),
-                };
-            })
-        );
+        const introPage = {
+            activeStage: "task1",
+            mode: "manual",
+            progressLabel: "Stage 4 of 8",
+            eyebrow: "Task block 1",
+            title: "Verbal-semantic task under 10 Hz stimulation",
+            subtitle: "The participant will hear short spoken statements and classify semantic consistency within each timed response window.",
+            bodyHtml: PlatformUtils.infoCardsMarkup([
+                { label: "Stimulation", value: "10 Hz binaural beat background audio." },
+                { label: "Responses", value: "Select one of three consistency options for each item." },
+                { label: "Pacing", value: "Each item advances automatically after the response window." }
+            ]),
+            supportText: "Use headphones throughout the block.",
+            buttonLabel: "Begin Task Block 1"
+        };
+
+        const itemPages = ExperimentConfig.task1.audioFiles.map(function (audioSrc, index) {
+            return {
+                activeStage: "task1",
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.taskItemSeconds,
+                progressLabel: `Stage 4 of 8 • Item ${index + 1} of ${ExperimentConfig.task1.audioFiles.length}`,
+                eyebrow: "Verbal-semantic item",
+                title: `Audio statement ${index + 1}`,
+                subtitle: "Listen to the item and choose the single response that best matches what you heard before the next trial appears.",
+                mediaHtml: PlatformUtils.buildTaskMediaAudio(audioSrc, "10 Hz background stimulation remains active during this block."),
+                bodyHtml: PlatformUtils.optionListMarkup(
+                    `audio_q_${index + 1}`,
+                    ExperimentConfig.task1.options,
+                    "Use keys 1, 2, or 3 to respond."
+                ),
+                skipLabel: "Skip item"
+            };
+        });
 
         PlatformUtils.renderSequence(
             container,
-            pages,
+            [introPage].concat(itemPages),
             function () {
-                window.location.href = ExperimentConfig.routes.surveyPostTask1;
+                PlatformUtils.goToRoute("surveyPostTask1");
             },
             { backgroundAudioId: "background-audio" }
         );

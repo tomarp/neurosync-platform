@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optical Illusion Task</title>
+    <title>Visuospatial Illusion Task</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="task2">
-    <main class="page-shell">
-        <div id="page-container"></div>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <audio id="background-audio" loop preload="auto">
         <source src="auditoryBeats/40HzBinauralBeats.mp3" type="audio/mpeg">
@@ -21,34 +19,47 @@
     <script>
         PlatformUtils.setPageData("task2");
         const container = document.getElementById("page-container");
-        const pages = [
-            {
-                mode: "manual",
-                eyebrow: "Stage 6",
-                title: ExperimentConfig.task2.introTitle,
-                subtitle: ExperimentConfig.task2.introBody,
-                buttonLabel: "Begin Task 2",
-            },
-        ].concat(
-            ExperimentConfig.task2.imageItems.map(function (item, index) {
-                return {
-                    mode: "timed",
-                    timer: true,
-                    seconds: ExperimentConfig.timings.taskItemSeconds,
-                    eyebrow: `Task 2 Item ${index + 1} of ${ExperimentConfig.task2.imageItems.length}`,
-                    title: `Optical Illusion ${index + 1}`,
-                    subtitle: item.prompt,
-                    mediaHtml: PlatformUtils.buildTaskMediaImage(item.src, item.prompt),
-                    bodyHtml: PlatformUtils.optionListMarkup(`image_q_${index + 1}`, ExperimentConfig.task2.options),
-                };
-            })
-        );
+        const introPage = {
+            activeStage: "task2",
+            mode: "manual",
+            progressLabel: "Stage 6 of 8",
+            eyebrow: "Task block 2",
+            title: "Visuospatial illusion task under 40 Hz stimulation",
+            subtitle: "The participant inspects each illusion image and reports whether the hidden target or pattern can be identified before the next item appears.",
+            bodyHtml: PlatformUtils.infoCardsMarkup([
+                { label: "Stimulation", value: "40 Hz binaural beat background audio." },
+                { label: "Responses", value: "Select one of three outcome options for each illusion." },
+                { label: "Visual focus", value: "The image remains dominant so the participant can inspect it without clutter." }
+            ]),
+            supportText: "Inspect each image carefully before the timer expires.",
+            buttonLabel: "Begin Task Block 2"
+        };
+
+        const itemPages = ExperimentConfig.task2.imageItems.map(function (item, index) {
+            return {
+                activeStage: "task2",
+                mode: "timed",
+                timer: true,
+                seconds: ExperimentConfig.timings.taskItemSeconds,
+                progressLabel: `Stage 6 of 8 • Item ${index + 1} of ${ExperimentConfig.task2.imageItems.length}`,
+                eyebrow: "Visuospatial illusion item",
+                title: `Illusion image ${index + 1}`,
+                subtitle: item.prompt,
+                mediaHtml: PlatformUtils.buildTaskMediaImage(item.src, item.prompt),
+                bodyHtml: PlatformUtils.optionListMarkup(
+                    `image_q_${index + 1}`,
+                    ExperimentConfig.task2.options,
+                    "Use keys 1, 2, or 3 to respond."
+                ),
+                skipLabel: "Skip item"
+            };
+        });
 
         PlatformUtils.renderSequence(
             container,
-            pages,
+            [introPage].concat(itemPages),
             function () {
-                window.location.href = ExperimentConfig.routes.surveyPostTask2;
+                PlatformUtils.goToRoute("surveyPostTask2");
             },
             { backgroundAudioId: "background-audio" }
         );

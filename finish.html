@@ -7,30 +7,31 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="finish">
-    <main class="page-shell">
-        <section class="stage-card stage-card--manual">
-            <p class="eyebrow">Session Complete</p>
-            <h1>Thank You for Participating</h1>
-            <p class="stage-subtitle">
-                Please remain seated while the operator provides the final instructions and checks the recording status.
-            </p>
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <h2>What is saved</h2>
-                    <p>Survey responses, physiology, and video are handled outside this static app.</p>
-                </div>
-                <div class="summary-card">
-                    <h2>Operator note</h2>
-                    <p>Confirm recording shutdown and participant debrief before closing the session.</p>
-                </div>
-            </div>
-        </section>
-    </main>
+    <main class="page-shell"><div id="page-container"></div></main>
 
     <script src="experiment-config.js"></script>
     <script src="platform-utils.js"></script>
     <script>
         PlatformUtils.setPageData("finish");
+        PlatformUtils.renderStagePage(
+            document.getElementById("page-container"),
+            {
+                activeStage: "finish",
+                mode: "manual",
+                allowSkip: false,
+                progressLabel: "Stage 8 of 8",
+                eyebrow: "Session complete",
+                title: "NEUROSYNC session completed",
+                subtitle: "Keep the participant seated while the operator verifies recordings, confirms survey completion, and shuts down external acquisition safely.",
+                bodyHtml: PlatformUtils.infoCardsMarkup([
+                    { label: "Operator check", value: "Stop EEG, wearable, and video recording only after confirming safe completion." },
+                    { label: "Documentation", value: "Record any session notes or interruptions before closing the session." },
+                    { label: "Closeout", value: "Debrief the participant and return to the operator home before the next session." }
+                ]),
+                extraActionsHtml: '<a class="secondary-link" href="home.html">Return to operator home</a><a class="topbar-link" href="index.html">Back to cover</a>'
+            },
+            function () {}
+        );
     </script>
 </body>
 </html>
